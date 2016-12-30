@@ -56,7 +56,7 @@ class Personne(models.Model):
 	TypeSignalement = models.CharField(max_length=50, choices=TYPE_SIGNALEMENT, default='Direct')
 	DateSignalement = models.DateTimeField()
 	IdAppelant = models.ForeignKey('Appelant')
-	IdSituation = models.ManyToManyField('Situation')
+	#IdSituation = models.ManyToManyField('Situation')
 	
 	
 
@@ -135,12 +135,12 @@ class Beneficier(models.Model):
 
 
 ### la classe etre est remplacée par la relation de plusieurs à plusieurs entre Personne et Situation matérialisé par IdSituation = models.ManyToManyField('Situation') dans la classe Personne.
-#class etre(models.Model):
-#	NumeroPersonne = models.ForeignKey('Personne')
-#	IdSituation = models.ForeignKey('Situation')
-#	
-#	def __unicode__(self):
-#		return "{0} [{1}]".format(self.etre.NumeroPersonne, self.etre.IdSituation)
+class etre(models.Model):
+	NumeroPersonne = models.ForeignKey('Personne')
+	IdSituation = models.ForeignKey('Situation')
+	
+	def __unicode__(self):
+		return "{0} [{1}]".format(self.etre.NumeroPersonne, self.etre.IdSituation)
 
 	
 
