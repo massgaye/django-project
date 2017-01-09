@@ -4,8 +4,8 @@ from django.db import models
 
 class Personne(models.Model):
 	NumeroPersonne = models.AutoField(primary_key=True)
-	Prenom = models.CharField(max_length=50)
-	Nom = models.CharField(max_length=50)
+	Prenom = models.CharField(max_length=50,  verbose_name="Prénom de la personne")
+	Nom = models.CharField(max_length=50, verbose_name="Nom de la personne")
 	TYPE_SEXE = (
 		('Garçon', 'Garçon'),
 		('Fille', 'Fille'),
@@ -28,9 +28,9 @@ class Personne(models.Model):
 		('venu d\'elle/de lui-même', 'venu d\'elle/de lui-même'),
 		('autres', 'autres'), 
 	)
-	StructureAcceuil = models.CharField(max_length=50, choices=STRUCTURE_ACCEUIL, default='SAO') 
+	StructureAcceuil = models.CharField(max_length=50, choices=STRUCTURE_ACCEUIL, default='SAO', verbose_name="Structure d'acceuil") 
 	
-	SuiviInfo = models.CharField(max_length=100)
+	SuiviInfo = models.CharField(max_length=100, verbose_name="Informations de suivi")
 	ETHNIE = (
 		('wolof','wolof'),
 		('sérére','sérére'),
@@ -53,8 +53,8 @@ class Personne(models.Model):
 		('Téléphone','Téléphone'),
 		('déclaration de recherche','déclaration de recherche'),
 	)
-	TypeSignalement = models.CharField(max_length=50, choices=TYPE_SIGNALEMENT, default='Direct')
-	DateSignalement = models.DateTimeField()
+	TypeSignalement = models.CharField(max_length=50, choices=TYPE_SIGNALEMENT, default='Direct', verbose_name="Type de signalement")
+	DateSignalement = models.DateTimeField(verbose_name="Date et heure du signalement")
 	IdAppelant = models.ForeignKey('Appelant')
 	#IdSituation = models.ManyToManyField('Situation')
 	
@@ -83,32 +83,32 @@ class Centre(models.Model):
 
 class TypeSituation(models.Model):
 	IdTypeSituation = models.AutoField(primary_key=True)
-	LibelleTypeSituation = models.CharField(max_length=50)
+	LibelleTypeSituation = models.CharField(max_length=50, verbose_name="Type de situation")
 	
 	def __unicode__(self):
 		return "{0} [{1}]".format(self.TypeSituation.IdTypeSituation,  self.TypeSituation.LibelleTypeSituation)
 
 class Service(models.Model):
 	IdService = models.AutoField(primary_key=True)
-	NatureService = models.CharField(max_length=50)
-	LibelleService = models.CharField(max_length=50)
+	NatureService = models.CharField(max_length=50, verbose_name="Nature du service")
+	LibelleService = models.CharField(max_length=50, verbose_name="Libellé du service reçu")
 
 	def __unicode__(self):
 		return "{0} {{1}} [{2}]".format(self.Service.IdService, self.Service.NatureService, self.Service.LibelleService)
 
 class Appelant(models.Model):
 	IdAppelant = models.AutoField(primary_key=True)
-	PrenomAppelant = models.CharField(max_length=50)
-	NomAppelant = models.CharField(max_length=50)
-	TelephoneAppelant = models.CharField(max_length=9)
-	VilleAppelant = models.CharField(max_length=30)
+	PrenomAppelant = models.CharField(max_length=50, verbose_name="Prénom de la personne appelant")
+	NomAppelant = models.CharField(max_length=50, verbose_name="Nom de la personne appelant")
+	TelephoneAppelant = models.CharField(max_length=9, verbose_name="Téléphone de la personne appelant")
+	VilleAppelant = models.CharField(max_length=30, verbose_name="Ville de la personne appelant")
 
 	def __unicode__(self):
 		return "{0} {{1}} {{2}} {{3}} [{4}]".format(self.Appelant.IdAppelant, self.Appelant.PrenomAppelant, self.Appelant.NomAppelant , self.Appelant.TelephoneAppelant, self.Appelant.VilleAppelant)
 
 class Appel(models.Model):
 	IdAppel = models.AutoField(primary_key=True)
-	DateAppel = models.DateTimeField()
+	DateAppel = models.DateTimeField(verbose_name="Date et heure de l'appel")
 	IdAppelant = models.ForeignKey('Appelant')
 
 	def __unicode__(self):
@@ -117,10 +117,10 @@ class Appel(models.Model):
 class Hebergement(models.Model):
 	NumeroPersonne = models.ForeignKey('Personne')
 	IdCentre = models.ForeignKey('Centre')
-	DateEntree = models.DateTimeField()
-	DateSortie = models.DateTimeField()
-	TypeHebergement = models.CharField(max_length=20)
-	OrientationSortie =  models.CharField(max_length=30)
+	DateEntree = models.DateTimeField(verbose_name="Date et heure du début de l'hebergement")
+	DateSortie = models.DateTimeField(verbose_name="Date et heure de la fin de l'hebergement")
+	TypeHebergement = models.CharField(max_length=20, verbose_name="Nature de l'hebergement")
+	OrientationSortie =  models.CharField(max_length=30, verbose_name="Orientation à la sortie")
 
 	def __unicode__(self):
 		return "{0} {{1}} {{2}} {{3}} {{4}} [{5}]".format(self.Hebergement.NumeroPersonne, self.Hebergement.IdCentre, self.Hebergement.DateEntree, self.Hebergement.DateSortie, self.Hebergement.TypeHebergement, self.Hebergement.OrientationSortie)
